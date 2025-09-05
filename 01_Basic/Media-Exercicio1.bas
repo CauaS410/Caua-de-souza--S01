@@ -7,11 +7,14 @@
 70 IF MEDIA > 60 THEN GOTO 200
 80 IF MEDIA < 30 THEN GOTO 300
 
-100 PRINT "Você precisa fazer a NP3."
+100 PRINT "Você fará a NP3."
+
 110 INPUT "Informe a nota da NP3: "; NP3
 120 NP3 = VAL(NP3)
 130 MEDIA = (MEDIA + NP3) / 2
 140 PRINT "Nova média: "; MEDIA
+
+
 150 IF MEDIA > 50 THEN GOTO 400 ELSE GOTO 500
 
 200 PRINT "Resultado: Aprovado direto."
