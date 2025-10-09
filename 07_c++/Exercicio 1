@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class MembroDaSociedade {
+private:
+    string nome;
+    string raca;
+    string funcao;
+
+public:
+    MembroDaSociedade(string nomeInicial, string racaInicial, string funcaoInicial) {
+        nome = nomeInicial;
+        raca = racaInicial;
+        funcao = funcaoInicial;
+    }
+
+    void descrever() {
+        cout << "Nome: " << nome << endl;
+        cout << "Raça: " << raca << endl;
+        cout << "Função: " << funcao << endl;
+        cout << "--------------------" << endl;
+    }
+};
+
+int main() {
+    MembroDaSociedade aragorn("Aragorn", "Humano", "Guardião");
+    MembroDaSociedade legolas("Legolas", "Elfo", "Arqueiro");
+
+    cout << "Membros da Sociedade do Anel:" << endl;
+    aragorn.descrever();
+    legolas.descrever();
+
+    return 0;
+}
