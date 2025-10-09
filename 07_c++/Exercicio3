@@ -1,0 +1,94 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Feitico {
+public:
+    string nome;
+    Feitico(string nome) : nome(nome) {}
+};
+
+class Ferramenta {
+public:
+    string nome;
+    Ferramenta(string nome) : nome(nome) {}
+};
+
+class Grimorio {
+private:
+    Feitico** feiticos;
+    int capacidade;
+    int quantidadeAtual;
+
+public:
+    Grimorio() {
+        capacidade = 10;
+        quantidadeAtual = 0;
+        feiticos = new Feitico*[capacidade];
+    }
+
+    ~Grimorio() {
+        for (int i = 0; i < quantidadeAtual; ++i) {
+            delete feiticos[i];
+        }
+        delete[] feiticos;
+    }
+
+    void adicionarFeitico(string nomeFeitico) {
+        if (quantidadeAtual < capacidade) {
+            feiticos[quantidadeAtual] = new Feitico(nomeFeitico);
+            quantidadeAtual++;
+        } else {
+            cout << "Grimorio está cheio" << endl;
+        }
+    }
+};
+
+class Maga {
+private:
+    string nome;
+    Grimorio grimorio;
+    Ferramenta** ferramentas;
+    int numFerramentas;
+
+public:
+    Maga(string nome, Ferramenta** listaFerramentas, int totalFerramentas) {
+        this->nome = nome;
+        this->ferramentas = listaFerramentas;
+        this->numFerramentas = totalFerramentas;
+    }
+
+    ~Maga() {}
+
+    Grimorio* getGrimorio() {
+        return &grimorio;
+    }
+
+    void listarFerramentas() {
+        cout << "Ferramentas de " << nome << " " << endl;
+        for (int i = 0; i < numFerramentas; ++i) {
+            cout << ferramentas[i]->nome << endl;
+        }
+    }
+};
+
+int main() {
+    const int totalFerramentas = 2;
+    Ferramenta* kitDeSobrevivencia[totalFerramentas];
+    kitDeSobrevivencia[0] = new Ferramenta("Capacete");
+    kitDeSobrevivencia[1] = new Ferramenta("Lanterna");
+
+    Maga frieren("Frieren", kitDeSobrevivencia, totalFerramentas);
+
+    frieren.getGrimorio()->adicionarFeitico("Zoltraak");
+    frieren.getGrimorio()->adicionarFeitico("Magia de Voar");
+
+    frieren.listarFerramentas();
+
+    for (int i = 0; i < totalFerramentas; ++i) {
+        delete kitDeSobrevivencia[i];
+    }
+
+    return 0;
+}
