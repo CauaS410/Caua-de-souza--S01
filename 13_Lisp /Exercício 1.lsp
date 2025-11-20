@@ -13,7 +13,6 @@
   (cond
     ((string= nome-da-erva "Ginseng")
      (* preco-base 3.0))
-    ;; aceitar 'Lotus' sem acento
     ((string= nome-da-erva "Lotus")
      (* preco-base 1.5))
     (t preco-base)))
