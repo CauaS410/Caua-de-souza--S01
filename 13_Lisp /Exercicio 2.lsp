@@ -1,58 +1,66 @@
+;; 1. Definicao da estrutura
 (defstruct criatura
   nome
   ambiente
   periculosidade
   vida-media)
 
+;; 2. Catalogo inicial (4 criaturas no minimo)
 (defparameter *catalogo*
   (list
-   (make-criatura :nome "Peeper"
-                  :ambiente "Safe Shallows"
-                  :periculosidade "Baixa"
-                  :vida-media 30)
-   (make-criatura :nome "Reaper Leviathan"
-                  :ambiente "Mountains"
-                  :periculosidade "Alta"
-                  :vida-media 150)
-   (make-criatura :nome "Crabsnake"
-                  :ambiente "Deep"
-                  :periculosidade "Media"
-                  :vida-media 45)
-   (make-criatura :nome "Warper"
-                  :ambiente "Deep"
-                  :periculosidade "Alta"
-                  :vida-media 120)
-   (make-criatura :nome "Holefish"
-                  :ambiente "Kelp Forest"
-                  :periculosidade "Baixa"
-                  :vida-media 25)))
+    (make-criatura :nome "Safe Shallows Fish"
+                   :ambiente "Shallows"
+                   :periculosidade "Baixa"
+                   :vida-media 3)
 
+    (make-criatura :nome "Reaper Leviathan"
+                   :ambiente "Open Ocean"
+                   :periculosidade "Alta"
+                   :vida-media 50)
+
+    (make-criatura :nome "Ghost Ray"
+                   :ambiente "Deep"
+                   :periculosidade "Media"
+                   :vida-media 12)
+
+    (make-criatura :nome "Crabsquid"
+                   :ambiente "Deep"
+                   :periculosidade "Alta"
+                   :vida-media 20)))
+
+;; 3. HOF: filtro por perigo
 (defun filtra-por-perigo (catalogo)
-  (remove-if-not
-   (lambda (c)
-     (not (string-equal (criatura-periculosidade c) "Baixa")))
-   catalogo))
+  "Retorna apenas criaturas cuja periculosidade NAO seja 'Baixa'."
+  (remove-if (lambda (c)
+               (string= (criatura-periculosidade c) "Baixa"))
+             catalogo))
 
+;; 4. Mapemento: relatorio apenas criaturas do ambiente Deep
 (defun relatorio-profundidade (catalogo)
-  (let ((deep-creatures
-          (remove-if-not
-           (lambda (c)
-             (string-equal (criatura-ambiente c) "Deep"))
-           catalogo)))
-    
-    (mapcar
-     (lambda (c)
-       (format nil "~a: Vive em ~a"
-               (criatura-nome c)
-               (criatura-ambiente c)))
-     deep-creatures)))
+  (let ((apenas-deep
+         (remove-if (lambda (c)
+                      (not (string= (criatura-ambiente c) "Deep")))
+                    catalogo)))
+    (mapcar (lambda (c)
+              (format nil "[~a]: Vive em [~a]"
+                      (criatura-nome c)
+                      (criatura-ambiente c)))
+            apenas-deep)))
 
-(format t "--- 3. Filtro de Perigo ---~%")
-(let ((perigosas (filtra-por-perigo *catalogo*)))
-  (dolist (c perigosas)
-    (format t "~a (~a)~%" (criatura-nome c) (criatura-periculosidade c))))
 
-(format t "~%--- 4. Relatório de Profundidade ---~%")
-(let ((relatorio (relatorio-profundidade *catalogo*)))
-  (dolist (item relatorio)
-    (format t "~a~%" item)))
+;; TESTES
+
+(dolist (c *catalogo*)
+  (format t "~a (~a) - perigo: ~a~%"
+          (criatura-nome c)
+          (criatura-ambiente c)
+          (criatura-periculosidade c)))
+
+(dolist (c (filtra-por-perigo *catalogo*))
+  (format t "~a - perigo: ~a~%"
+          (criatura-nome c)
+          (criatura-periculosidade c)))
+
+(format t "~%=== Relatorio das criaturas Deep ===~%")
+(dolist (linha (relatorio-profundidade *catalogo*))
+  (format t "~a~%" linha))
