@@ -1,47 +1,41 @@
 using System;
-using System.Collections.Generic;
 
-public class Pokemon
+public abstract class MonstroSombrio
 {
-  private string nome;
-
-  public Pokemon(string nome)
-  {
-    this.nome = nome;
-  }
-
-  public virtual void atacar()
-  {
-    Console.WriteLine($"{nome} está atacando!");
-  }
-
-  public string getNome()
-  {
-    return nome;
+	protected string nome;
+	
+	public MonstroSombrio(string nome)
+	{
+		this.nome = nome;
+	}
+	
+	public virtual void Mover()
+	{
+		Console.WriteLine("${nome} está se movendo...");
 	}
 }
 
-public class PokemonDeFogo : Pokemon
+public class Zumbi : MonstroSombrio
 {
-  public PokemonDeFogo(string nome) : base(nome)
+	public Zumbi(string nome) : base(nome)
+	{
+	}
+  
+  public override void Mover()
   {
-  }
-
-  public override void atacar()
-  {
-    Console.WriteLine($"{getNome()} lança fogo!");
+  	Console.WriteLine($"{nome} anda lentamente... (Zumbi lerdo)");
   }
 }
 
-public class PokemonDeAgua : Pokemon
+public class Espectro : MonstroSombrio
 {
-  public PokemonDeAgua(string nome) : base(nome)
-  {
-  }
+	public Espectro(string nome) : base(nome)
+	{
+	}
 
-  public override void atacar()
+	public override void Mover()
   {
-    Console.WriteLine($"{getNome()} lança um jato de água!");
+  	Console.WriteLine($"{nome} desliza rapidamente! (Espectro rápido)");
   }
 }
 
@@ -49,13 +43,32 @@ public class Program
 {
   public static void Main(string[] args)
   {
-    List<Pokemon> pokemons = new List<Pokemon>();
-    pokemons.Add(new PokemonDeFogo("Charmander"));
-    pokemons.Add(new PokemonDeAgua("Blastoise"));
-
-    foreach (Pokemon pokemon in pokemons)
+      Console.Write("Informe o número de monstros a serem criados: ");
+          int quantidade = int.Parse(Console.ReadLine());
+      
+      MonstroSombrio[] monstros = new MonstroSombrio[quantidade];
+      
+      for(int i = 0; i < quantidade; i++)
     {
-      pokemon.atacar();
+        Console.Write("Informe o tipo (zumbi/espectro): ");
+        string tipo = Console.ReadLine().ToLower();
+
+        Console.Write("Informe o nome do monstro: ");
+        string nome = Console.ReadLine();
+
+        if (tipo == "zumbi")
+          monstros[i] = new Zumbi(nome);
+        else if (tipo == "espectro")
+          monstros[i] = new Espectro(nome);
+        else
+          {
+            Console.WriteLine("Tipo inválido.");
+          }
     }
+
+      foreach (MonstroSombrio m in monstros)
+      {
+        m.Mover();
+      }
   }
 }
