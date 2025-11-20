@@ -1,52 +1,61 @@
-#include <iostream>
-#include <string>
+using System;
+using System.Collections.Generic;
 
-using namespace std;
+public class Pokemon
+{
+  private string nome;
 
-class MonstroSombrio {
-protected:
-    string nome;
+  public Pokemon(string nome)
+  {
+    this.nome = nome;
+  }
 
-public:
-    MonstroSombrio(string nome) : nome(nome) {}
-    virtual ~MonstroSombrio() {}
+  public virtual void atacar()
+  {
+    Console.WriteLine($"{nome} está atacando!");
+  }
 
-    virtual void Mover() = 0;
-};
+  public string getNome()
+  {
+    return nome;
+	}
+}
 
-class Zumbi : public MonstroSombrio {
-public:
-    Zumbi(string nome) : MonstroSombrio(nome) {}
+public class PokemonDeFogo : Pokemon
+{
+  public PokemonDeFogo(string nome) : base(nome)
+  {
+  }
 
-    void Mover() override {
-        cout << nome << " se arrasta lentamente pelo chão." << endl;
+  public override void atacar()
+  {
+    Console.WriteLine($"{getNome()} lança fogo!");
+  }
+}
+
+public class PokemonDeAgua : Pokemon
+{
+  public PokemonDeAgua(string nome) : base(nome)
+  {
+  }
+
+  public override void atacar()
+  {
+    Console.WriteLine($"{getNome()} lança um jato de água!");
+  }
+}
+
+public class Program
+{
+  public static void Main(string[] args)
+  {
+    List<Pokemon> pokemons = new List<Pokemon>();
+    pokemons.Add(new PokemonDeFogo("Charmander"));
+    pokemons.Add(new PokemonDeAgua("Blastoise"));
+
+    foreach (Pokemon pokemon in pokemons)
+    {
+      pokemon.atacar();
     }
-};
-
-class Espectro : public MonstroSombrio {
-public:
-    Espectro(string nome) : MonstroSombrio(nome) {}
-
-    void Mover() override {
-        cout << nome << " flutua rapidamente pelo ar." << endl;
-    }
-};
-
-int main() {
-    const int tamanhoDaHorda = 2;
-    MonstroSombrio* horda[tamanhoDaHorda];
-
-    horda[0] = new Zumbi("Zumbi Lento");
-    horda[1] = new Espectro("Espectro Rápido");
-
-    cout << "A horda sombria avança!" << endl;
-    for (int i = 0; i < tamanhoDaHorda; ++i) {
-        horda[i]->Mover();
-    }
-
-    for (int i = 0; i < tamanhoDaHorda; ++i) {
-        delete horda[i];
-    }
-
-    return 0;
+  }
 }
