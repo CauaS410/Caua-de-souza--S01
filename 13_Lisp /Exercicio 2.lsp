@@ -61,6 +61,5 @@
           (criatura-nome c)
           (criatura-periculosidade c)))
 
-(format t "~%=== Relatorio das criaturas Deep ===~%")
 (dolist (linha (relatorio-profundidade *catalogo*))
   (format t "~a~%" linha))
