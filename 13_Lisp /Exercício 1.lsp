@@ -1,28 +1,20 @@
-(defun calcula-dosagem (peso-kg idade-anos)
+(defun calcula-dosagem (peso idade)
   (cond
-    ((or (< idade-anos 5) (< peso-kg 20))
-     10)
-    ((and (<= 5 idade-anos 12) (>= peso-kg 20))
-     25)
-    (t
-     50)))
+    ((or (< idade 5) (< peso 20)) 10)
+    ((and (>= idade 5) (<= idade 12) (>= peso 20)) 25)
+    (t 50)))
 
 (defun ajusta-preco (preco-base nome-da-erva)
-  (let ((nome-normalizado (string-downcase nome-da-erva)))
-    (cond
-      ((string= nome-normalizado "ginseng")
-       (* preco-base 3.0))
-      ((string= nome-normalizado "lótus")
-       (* preco-base 1.5))
-      (t
-       preco-base))))
+  (cond
+    ((string= nome-da-erva "Ginseng") (* 3.0 preco-base))
+    ((string= nome-da-erva "Lotus") (* 1.5 preco-base))
+    (t preco-base)))
+    
+(format t "Dosagem: ~a~%" (calcula-dosagem 60 14))
+(format t "Preco final: ~a~%" (ajusta-preco 10 "Lotus"))
 
-(defun preco-final (nome-da-erva preco-base peso-kg idade-anos)
-  (let ((dosagem-calculada (calcula-dosagem peso-kg idade-anos)))
-    (format t "-> Paciente: ~a anos, ~a kg. Dosagem base: ~a ml.~%"
-            idade-anos peso-kg dosagem-calculada)
-    (ajusta-preco preco-base nome-da-erva)))
+(format t "Dosagem: ~a~%" (calcula-dosagem 15 4))
+(format t "Preco final: ~a~%" (ajusta-preco 15 "Ginseng"))
 
-;; Cálculo solicitado (Exercício 3)
-(format t "Preço final para 'Lótus' (14 anos, 60kg, 10 moedas base): ~a moedas~%"
-        (preco-final "Lótus" 10 60 14))
+(format t "Dosagem: ~a~%" (calcula-dosagem 40 10))
+(format t "Preco final: ~a~%" (ajusta-preco 20 "Ginseng"))
