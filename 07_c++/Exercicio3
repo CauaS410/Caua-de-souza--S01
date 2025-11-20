@@ -1,94 +1,89 @@
-#include <iostream>
-#include <string>
+using System;
+using System.Collections.Generic;
 
-using namespace std;
+public class Feitico
+{
+  public string nome;
+  public string elemento;
+  public int poder;
 
-class Feitico {
-public:
-    string nome;
-    Feitico(string nome) : nome(nome) {}
-};
+  public Feitico(string nome, string elemento, int poder)
+  {
+    this.nome = nome;
+    this.elemento = elemento;
+    this.poder = poder;
+  }
+}
 
-class Ferramenta {
-public:
-    string nome;
-    Ferramenta(string nome) : nome(nome) {}
-};
+public class Grimorio
+{
+	private List<Feitico> feiticos = new List<Feitico>();
 
-class Grimorio {
-private:
-    Feitico** feiticos;
-    int capacidade;
-    int quantidadeAtual;
+  public void AdicionarFeitico(Feitico f)
+  {
+    feiticos.Add(f);
+  }
 
-public:
-    Grimorio() {
-        capacidade = 10;
-        quantidadeAtual = 0;
-        feiticos = new Feitico*[capacidade];
+  public void ListarFeiticos()
+  {
+    Console.WriteLine("Feitiços no Grimório:");
+    foreach (Feitico f in feiticos)
+    {
+      Console.WriteLine($"- {f.nome} ({f.elemento}), poder {f.poder}");
     }
+  }
+}
 
-    ~Grimorio() {
-        for (int i = 0; i < quantidadeAtual; ++i) {
-            delete feiticos[i];
-        }
-        delete[] feiticos;
+public class Ferramenta
+{
+	public string nome;
+
+  public Ferramenta(string nome)
+  {
+    this.nome = nome;
+  }
+}
+
+public class Maga
+{
+	public string nome;
+  public Grimorio grimorio;
+  public List<Ferramenta> ferramentas;
+
+  public Maga(string nome, List<Ferramenta> ferramentas)
+  {
+    this.nome = nome;
+    this.grimorio = new Grimorio();
+    this.ferramentas = ferramentas;
+  }
+
+  public void MostrarFerramentas()
+  {
+    Console.WriteLine($"\nFerramentas de {nome}:");
+    foreach (Ferramenta f in ferramentas)
+    {
+      Console.WriteLine($"- {f.nome}");
     }
+  }
+}
 
-    void adicionarFeitico(string nomeFeitico) {
-        if (quantidadeAtual < capacidade) {
-            feiticos[quantidadeAtual] = new Feitico(nomeFeitico);
-            quantidadeAtual++;
-        } else {
-            cout << "Grimorio está cheio" << endl;
-        }
-    }
-};
+public class Program
+{
+  public static void Main(string[] args)
+  {
+    List<Ferramenta> ferramentas = new List<Ferramenta>
+    {
+        new Ferramenta("Lanterna Mágica"),
+        new Ferramenta("Capa de Viagem"),
+        new Ferramenta("Mapa Antigo")
+    };
 
-class Maga {
-private:
-    string nome;
-    Grimorio grimorio;
-    Ferramenta** ferramentas;
-    int numFerramentas;
+    Maga frieren = new Maga("Frieren", ferramentas);
 
-public:
-    Maga(string nome, Ferramenta** listaFerramentas, int totalFerramentas) {
-        this->nome = nome;
-        this->ferramentas = listaFerramentas;
-        this->numFerramentas = totalFerramentas;
-    }
+    frieren.grimorio.AdicionarFeitico(new Feitico("Bola de Fogo", "Fogo", 80));
+    frieren.grimorio.AdicionarFeitico(new Feitico("Cura", "Luz", 50));
 
-    ~Maga() {}
-
-    Grimorio* getGrimorio() {
-        return &grimorio;
-    }
-
-    void listarFerramentas() {
-        cout << "Ferramentas de " << nome << " " << endl;
-        for (int i = 0; i < numFerramentas; ++i) {
-            cout << ferramentas[i]->nome << endl;
-        }
-    }
-};
-
-int main() {
-    const int totalFerramentas = 2;
-    Ferramenta* kitDeSobrevivencia[totalFerramentas];
-    kitDeSobrevivencia[0] = new Ferramenta("Capacete");
-    kitDeSobrevivencia[1] = new Ferramenta("Lanterna");
-
-    Maga frieren("Frieren", kitDeSobrevivencia, totalFerramentas);
-
-    frieren.getGrimorio()->adicionarFeitico("Zoltraak");
-    frieren.getGrimorio()->adicionarFeitico("Magia de Voar");
-
-    frieren.listarFerramentas();
-
-    for (int i = 0; i < totalFerramentas; ++i) {
-        delete kitDeSobrevivencia[i];
-    }
-
-    return 0;
+    frieren.grimorio.ListarFeiticos();
+    frieren.MostrarFerramentas();
+  }
 }
