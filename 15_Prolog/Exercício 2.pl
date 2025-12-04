@@ -19,8 +19,8 @@ concluiu(maria, algoritmos).
 concluiu(maria, calculo_1).
 
 falta_concluir(Aluno, Disc) :-
-    prerequisito(Req, Disc),
-    \+ concluiu(Aluno, Req).
+    prerequisito(Disc, _),
+    \+ concluiu(Aluno, Disc).
 
 aluno_apto(Aluno, Disc) :-
     area(Disc, Tipo),
