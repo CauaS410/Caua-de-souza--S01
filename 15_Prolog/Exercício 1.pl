@@ -31,8 +31,4 @@ alto_impacto(D) :-
     prerequisito(B, D),
     A \= B.
 
-% 1. Testar quais disciplinas são de alto impacto (>5 creditos, desbloqueia 2+):
-% ?- alto_impacto(D).
-%
-% 2. Query do enunciado (Matematica, 4 creditos, não é pré-requisito de nada):
-% ?- consulta_exercicio_1(D).
+% disciplina(D, 4, matematica), \+ prerequisito(_, D).
