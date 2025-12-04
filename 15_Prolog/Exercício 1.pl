@@ -1,32 +1,36 @@
-area(calculo_1, matematica).
-area(calculo_2, matematica).
-area(geometria_analitica, matematica).
-area(algebra_linear, matematica).
-area(fisica_1, exatas).
-area(algoritmos, computacao).
+disciplina(programacao1, 6, fundamental).
+disciplina(calculo1, 8, matematica).
+disciplina(estrutura_dados, 6, computacao).
+disciplina(algoritmos, 4, computacao).
+disciplina(banco_dados, 6, aplicacoes).
+disciplina(redes, 4, aplicacoes).
+disciplina(inteligencia_artificial, 8, computacao).
+disciplina(compiladores, 6, computacao).
+disciplina(teoria_grafos, 4, matematica).
+disciplina(estatistica, 6, matematica).
+disciplina(sistemas_operacionais, 6, computacao).
+disciplina(projeto_integrador, 10, aplicacoes).
 
-creditos(calculo_1, 6).
-creditos(calculo_2, 4).
-creditos(geometria_analitica, 4).
-creditos(algebra_linear, 6).
-creditos(fisica_1, 4).
-creditos(algoritmos, 4).
-
-prerequisito(calculo_1, calculo_2).
-prerequisito(calculo_1, fisica_1).
-prerequisito(algebra_linear, calculo_2).
+prerequisito(estrutura_dados, programacao1).
+prerequisito(algoritmos, estrutura_dados).
+prerequisito(banco_dados, programacao1).
+prerequisito(inteligencia_artificial, algoritmos).
+prerequisito(inteligencia_artificial, calculo1).
+prerequisito(compiladores, algoritmos).
+prerequisito(compiladores, estrutura_dados).
+prerequisito(sistemas_operacionais, estrutura_dados).
+prerequisito(teoria_grafos, calculo1).
+prerequisito(estatistica, calculo1).
+prerequisito(projeto_integrador, banco_dados).
+prerequisito(projeto_integrador, sistemas_operacionais).
 
 alto_impacto(D) :-
-    creditos(D, C),
+    disciplina(D, C, _),
     C > 5,
-    prerequisito(D, A),
-    prerequisito(D, B),
+    prerequisito(A, D),
+    prerequisito(B, D),
     A \= B.
 
-sem_dependentes(D) :-
-    \+ prerequisito(D, _).
-
-consulta(D) :-
-    area(D, matematica),
-    creditos(D, 4),
-    sem_dependentes(D).
+resposta_query(D) :-
+    disciplina(D, 4, matematica),
+    \+ prerequisito(_, D).
