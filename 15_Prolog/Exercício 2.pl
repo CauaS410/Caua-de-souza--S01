@@ -22,7 +22,8 @@ falta_concluir(Aluno, Disc) :-
     prerequisito(Disc, _),
     \+ concluiu(Aluno, Disc).
 
+
 aluno_apto(Aluno, Disc) :-
     area(Disc, Tipo),
     Tipo \= fundamental,
-    \+ falta_concluir(Aluno, Disc).
+    \+ (prerequisito(P, Disc), falta_concluir(Aluno, P)).
