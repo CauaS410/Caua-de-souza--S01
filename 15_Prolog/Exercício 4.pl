@@ -52,3 +52,5 @@ consulta_exercicio_4(D) :-
     disciplina_raiz(D),
     disciplina(D, _, Area),
     Area \= aplicacoes.
+
+% disciplina_raiz(D), disciplina(D, _, Area), Area \= aplicacoes.
