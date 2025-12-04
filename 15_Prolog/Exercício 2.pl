@@ -48,3 +48,6 @@ aluno_apto(Aluno, Disc) :-
     disciplina(Disc, _, Tipo),
     Tipo \= fundamental,
     \+ (prerequisito(Disc, P), falta_concluir(Aluno, P)).
+
+% aluno_apto(joao, Disciplina).
+% aluno_apto(maria, inteligencia_artificial).
