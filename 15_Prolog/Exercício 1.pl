@@ -22,3 +22,11 @@ alto_impacto(D) :-
     prerequisito(D, A),
     prerequisito(D, B),
     A \= B.
+
+sem_dependentes(D) :-
+    \+ prerequisito(D, _).
+
+consulta(D) :-
+    area(D, matematica),
+    creditos(D, 4),
+    sem_dependentes(D).
