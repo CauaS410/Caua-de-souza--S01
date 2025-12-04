@@ -53,3 +53,5 @@ deficiencia_mat(Aluno) :-
 consulta_exercicio_3(Aluno) :-
     especialista_comp(Aluno),
     deficiencia_mat(Aluno).
+
+% especialista_comp(Aluno), deficiencia_mat(Aluno).
