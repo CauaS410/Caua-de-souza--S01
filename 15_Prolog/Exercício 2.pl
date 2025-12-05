@@ -50,5 +50,5 @@ aluno_apto(Aluno, Disc) :-
     Tipo \= fundamental,
     \+ (prerequisito(Disc, P), falta_concluir(Aluno, P, Disc)).
 
-% aluno_apto(joao, Disciplina).
-% aluno_apto(maria, inteligencia_artificial).
+% query: aluno_apto(joao, Disciplina).
+% query: aluno_apto(maria, inteligencia_artificial).
