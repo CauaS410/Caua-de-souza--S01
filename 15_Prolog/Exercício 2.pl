@@ -40,14 +40,15 @@ concluiu(lucas, algoritmos).
 concluiu(lucas, redes).
 concluiu(lucas, banco_dados).
 
-falta_concluir(Aluno, Disc) :-
-    prerequisito(_, Disc),
-    \+ concluiu(Aluno, Disc).
+falta_concluir(Aluno, PreReq, Disc) :-
+    prerequisito(Disc, PreReq),
+    \+ concluiu(Aluno, PreReq).
+
 
 aluno_apto(Aluno, Disc) :-
     disciplina(Disc, _, Tipo),
     Tipo \= fundamental,
-    \+ (prerequisito(Disc, P), falta_concluir(Aluno, P)).
+    \+ (prerequisito(Disc, P), falta_concluir(Aluno, P, Disc)).
 
 % aluno_apto(joao, Disciplina).
 % aluno_apto(maria, inteligencia_artificial).
