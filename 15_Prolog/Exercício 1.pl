@@ -31,4 +31,4 @@ alto_impacto(D) :-
     prerequisito(B, D),
     A \= B.
 
-% disciplina(D, 4, matematica), \+ prerequisito(_, D).
+% query: disciplina(D, 4, matematica), \+ prerequisito(_, D).
